@@ -1,0 +1,7 @@
+<h1><%= link_to @post.title, @post.url %></h1>
+<%= "#{@post.comments.size} comments" %>
+<br />
+<% @comments.each do |comment| %>
+  <%= comment.content %>
+  <br />
+<% end %>

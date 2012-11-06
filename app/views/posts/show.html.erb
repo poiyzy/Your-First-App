@@ -5,3 +5,9 @@
   <%= comment.content %>
   <br />
 <% end %>
+
+<h2>Leave a comment</h2>
+<%= form_for @comment, url: post_comments_path(@post) do |f| %>
+  <%= f.text_field :content %>
+  <%= f.submit "Comment!" %>
+<% end %>

@@ -22,14 +22,14 @@ class PostsController < ApplicationController
 
   def up
     @post.upvotes += 1
-    @post.points += 1
+    @post.count_points
     @post.save
     redirect_to :back
   end
 
   def down
     @post.downvotes += 1
-    @post.points -= 1
+    @post.count_points
     @post.save
     redirect_to :back
   end

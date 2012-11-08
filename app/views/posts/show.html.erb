@@ -1,6 +1,11 @@
 <h1><%= link_to @post.title, @post.url %></h1>
 <%= pluralize @post.comments.size, "comment" %>
 <br />
+<%= @post.points %>
+<%= link_to "vote up (#{@post.upvotes})", up_post_path(@post) %>
+<%= link_to "vote down (#{@post.downvotes})", down_post_path(@post) %>
+
+<br />
 <% @comments.each do |comment| %>
   <%= comment.content %>
   <br />

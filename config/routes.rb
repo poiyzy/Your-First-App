@@ -3,6 +3,11 @@ CourseProject::Application.routes.draw do
 
   resources :posts, except: [:update, :destroy] do
     resources :comments, only: [:create]
+
+    member do
+      get 'up'
+      get 'down'
+    end
   end
 
 end

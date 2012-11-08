@@ -1,5 +1,5 @@
 <h1><%= link_to @post.title, @post.url %></h1>
-<%= "#{@post.comments.size} comments" %>
+<%= pluralize @post.comments.size, "comment" %>
 <br />
 <% @comments.each do |comment| %>
   <%= comment.content %>
@@ -7,7 +7,7 @@
 <% end %>
 
 <h2>Leave a comment</h2>
-<%= form_for @comment, url: post_comments_path(@post) do |f| %>
+<%= form_for [@post, @comment] do |f| %>
   <%= f.text_field :content %>
   <%= f.submit "Comment!" %>
 <% end %>

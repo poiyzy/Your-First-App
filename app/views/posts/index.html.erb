@@ -1,3 +1,6 @@
 <% @posts.each do |post| %>
-  <h2><%= link_to post.title, post.url %></h2><%= link_to "#{post.comments.size} comments", post %><br />
+  <h2><%= link_to post.title, post.url %></h2><%= link_to pluralize(post.comments.size, "comment"), post %><br />
+  <%= pluralize(post.points, "point") %>
+  <%= link_to "UP", up_post_path(post) %>
+  <%= link_to "Down", down_post_path(post) %>
 <% end %>

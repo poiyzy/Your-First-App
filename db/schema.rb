@@ -25,6 +25,8 @@ ActiveRecord::Schema.define(:version => 20121108021736) do
     t.string   "url"
     t.datetime "created_at",                :null => false
     t.datetime "updated_at",                :null => false
+    t.integer  "upvotes",    :default => 0
+    t.integer  "downvotes",  :default => 0
     t.integer  "points",     :default => 0
   end
 

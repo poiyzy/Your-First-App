@@ -2,7 +2,7 @@ class PostsController < ApplicationController
   before_filter :find_post, except: [:new, :create, :index]
 
   def index
-    @posts = Post.all
+    @posts = Post.order("points DESC")
   end
 
   def show
@@ -17,16 +17,18 @@ class PostsController < ApplicationController
   def create
     post = Post.new(params[:post])
     post.save
-    redirect_to @post
+    redirect_to :back
   end
 
   def up
+    @post.upvotes += 1
     @post.points += 1
     @post.save
     redirect_to :back
   end
 
   def down
+    @post.downvotes += 1
     @post.points -= 1
     @post.save
     redirect_to :back

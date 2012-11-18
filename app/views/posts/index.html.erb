@@ -1,28 +1,32 @@
 <%= link_to "Post Your First App", "#myModal", class: "btn btn-primary", "data-toggle" => "modal" %>
- 
-<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h3 id="myModalLabel">Post Your First App</h3>
+<% if logged_in? %>
+  <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+      <h3 id="myModalLabel">Post Your First App</h3>
+    </div>
+    <%= form_for :post do |f| %>
+      <div class="modal-body">
+        <p>
+          <%= f.label "Your app's name" %>
+          <%= f.text_field :title %>
+          <%= f.label "Your app's url" %>
+          <%= f.text_field :url %>
+        </p>
+      </div>
+      <div class="modal-footer">
+        <%= f.submit "Post Your App", class: "btn btn-primary" %>
+      </div>
+    <% end %>
   </div>
-  <%= form_for :post do |f| %>
-    <div class="modal-body">
-      <p>
-        <%= f.label "Your app's name" %>
-        <%= f.text_field :title %>
-        <%= f.label "Your app's url" %>
-        <%= f.text_field :url %>
-      </p>
-    </div>
-    <div class="modal-footer">
-      <%= f.submit "Post Your App", class: "btn btn-primary" %>
-    </div>
-  <% end %>
-</div>
+<% end %>
 
 <% @posts.each do |post| %>
-  <h2><%= link_to post.title, post.url %></h2><%= link_to pluralize(post.comments.size, "comment"), post %><br />
-  <%= post.points %>
-  <%= link_to "vote up (#{post.upvotes})", up_post_path(post) %>
-  <%= link_to "vote down (#{post.downvotes})", down_post_path(post) %>
+  <h2><%= link_to post.title, post.url %></h2>
+  Created_by: @<%= post.user.username %>
+  <br />
+  <%= link_to pluralize(post.comments.count, "comment"), post %><br />
+  <%= post.vote_number %>
+  <%= link_to "vote up (#{post.votes.where(direction: "up").count})", post_votes_up_path(post) %>
+  <%= link_to "vote down (#{post.votes.where(direction: "down").count})", post_votes_down_path(post) %>
 <% end %>

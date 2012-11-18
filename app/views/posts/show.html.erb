@@ -1,18 +1,21 @@
 <h1><%= link_to @post.title, @post.url %></h1>
-<%= pluralize @post.comments.size, "comment" %>
+Created_by: @<%= @post.user.username %>
 <br />
-<%= @post.points %>
-<%= link_to "vote up (#{@post.upvotes})", up_post_path(@post) %>
-<%= link_to "vote down (#{@post.downvotes})", down_post_path(@post) %>
+<%= pluralize @comments.count, "comment" %>
+<br />
+<%= @post.vote_number %>
+<%= link_to "vote up (#{@post.votes.where(direction: "up").count})", post_votes_up_path(@post) %>
+<%= link_to "vote down (#{@post.votes.where(direction: "down").count})", post_votes_down_path(@post) %>
 
 <br />
 <% @comments.each do |comment| %>
+  @<%= comment.user.username %>:
   <%= comment.content %>
   <br />
 <% end %>
 
 <h2>Leave a comment</h2>
-<%= form_for [@post, @comment] do |f| %>
+<%= form_for [@post, @post.comments.new] do |f| %>
   <%= f.text_field :content %>
   <%= f.submit "Comment!" %>
 <% end %>
